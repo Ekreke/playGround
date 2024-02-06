@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package person;
+
+// 包路径：从mod下开始的路径
+option go_package = "grpc/proto/person;person";
+
+// 相当于golang中结构体
+message Person{
+    string name = 1 ; 
+    int32 age = 2;
+    enum  sex {
+        option allow_alias = true; 
+        MALE = 0;
+        BOY = 0 ;
+        FEMALE = 1;
+    }
+
+    oneof TestOneOf{
+        string one = 6 ;
+        string two = 7 ; 
+        string three = 8;
+    }
+
+    // 字符串列表
+    repeated string test = 4; 
+    map<string, string> test_map = 5;
+    // 保留字
+    reserved "test_key","test_key2";
+}
+
+message Home{
+    repeated Person persons = 1 ;
+    // 结构嵌套
+    message V{
+        string name =1 ; 
+    } 
+    V v = 2;
+}
